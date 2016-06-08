@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.util.List;
 
-import zikaZeroAnelDual.Paradigm;
-
 public class ZikaZeroAnelDual {
 
     /**
@@ -13,7 +11,7 @@ public class ZikaZeroAnelDual {
      * @param graph
      * @return set of volunteers that satisfies the preconditions
      */
-    public List<Integer> searchVolunteers(Graph graph, Paradigm paradigm){
+    public List<Integer> volunteersSearch(Graph graph, Paradigm paradigm){
         
         switch(paradigm){
             case BRUTE_FORCE:
@@ -27,7 +25,7 @@ public class ZikaZeroAnelDual {
         return null;
     }
 
-    public void runSearch(Paradigm paradigm, String[]args) {
+    public void runVolunteersSearch(Paradigm paradigm, String[]args) {
 
         Graph graph = new Graph();
         
@@ -43,7 +41,7 @@ public class ZikaZeroAnelDual {
                 e.printStackTrace();
             }
 
-            List<Integer> path = searchVolunteers(graph, paradigm);
+            List<Integer> path = volunteersSearch(graph, paradigm);
 
             try {
                 graph.saveOut(args[1], path);

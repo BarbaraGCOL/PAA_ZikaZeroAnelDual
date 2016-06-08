@@ -11,43 +11,43 @@ public class Extractor {
         int countVertices = graph.getVertexCount();
         int countFocus = graph.getFocusCount();
         
-        Set<List<Integer>> combinations = new HashSet<List<Integer>>();
-        List<Integer> combination;
+        Set<List<Integer>> subgraphs = new HashSet<List<Integer>>();
+        List<Integer> extractedSubgraph;
 
         for(int vertex: vertices)
         {
-            combination = new ArrayList<Integer>();
-            combination.add(vertex);
-            if(countFocus <= 2 && subgraph.coverAllFocus(combination)){
-                return combination;
+            extractedSubgraph = new ArrayList<Integer>();
+            extractedSubgraph.add(vertex);
+            if(countFocus <= 2 && subgraph.coverAllFocus(extractedSubgraph)){
+                return extractedSubgraph;
             }
-            combinations.add(combination);
+            subgraphs.add(extractedSubgraph);
         }
 
         int lastVertex;
 
-        for(int combinationSize = 2 ; combinationSize <= countVertices; combinationSize++)
+        for(int subgraphSize = 2 ; subgraphSize <= countVertices; subgraphSize++)
         {
-            Set<List<Integer>> combinationsAux = new HashSet<List<Integer>>();
+            Set<List<Integer>> subgraphsAux = new HashSet<List<Integer>>();
 
-            for(List<Integer> comb: combinations)
+            for(List<Integer> sub: subgraphs)
             {
-                if(comb.size() == combinationSize -1){
-                    lastVertex = comb.get(comb.size() - 1);
+                if(sub.size() == subgraphSize -1){
+                    lastVertex = sub.get(sub.size() - 1);
                     for(int vertex: graph.getAdjacency(lastVertex))
                     {
                         if(vertex > lastVertex){
-                            List<Integer> newComb = new ArrayList<Integer>(comb);
-                            newComb.add(vertex);
-                            if(countFocus <= (newComb.size() * 2) && subgraph.coverAllFocus(newComb)){
-                                return newComb;
+                            List<Integer> newSubgraph = new ArrayList<Integer>(sub);
+                            newSubgraph.add(vertex);
+                            if(countFocus <= (newSubgraph.size() * 2) && subgraph.coverAllFocus(newSubgraph)){
+                                return newSubgraph;
                             }
-                            combinationsAux.add(newComb);
+                            subgraphsAux.add(newSubgraph);
                         }
                     }
                 }
             }
-            combinations.addAll(combinationsAux);
+            subgraphs.addAll(subgraphsAux);
         }
 
         return new ArrayList<Integer>(vertices);
