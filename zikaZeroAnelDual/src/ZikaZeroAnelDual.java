@@ -11,13 +11,18 @@ public class ZikaZeroAnelDual {
      * @param graph
      * @return set of volunteers that satisfies the preconditions
      */
-    public List<Integer> volunteersSearch(Graph graph, Paradigm paradigm){
-        
+    public List<Integer> volunteersSearch(Graph graph, ParadigmEnum paradigm){
+
+    	Extractor extractor = new Extractor();
+    	List<Integer> volunteers;
+    	
         switch(paradigm){
             case BRUTE_FORCE:
-                Extractor extractor = new Extractor();
-                List<Integer> volunteers = extractor.extractSubgraphs(graph);
+                volunteers = extractor.extractSolutionBruteForce(graph);
                 return volunteers;
+            case DYNAMIC:
+                volunteers = extractor.extractSolutionDynamic(graph);
+                return volunteers;    
             default:
                 break;
         }
@@ -25,7 +30,7 @@ public class ZikaZeroAnelDual {
         return null;
     }
 
-    public void runVolunteersSearch(Paradigm paradigm, String[]args) {
+    public void runVolunteersSearch(ParadigmEnum paradigm, String[]args) {
 
         Graph graph = new Graph();
         

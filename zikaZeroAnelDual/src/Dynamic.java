@@ -1,7 +1,7 @@
-public class BruteForce {
+public class Dynamic {
 
     public static void main(String[] args) {
         ZikaZeroAnelDual zikaZeroAnelDual = new ZikaZeroAnelDual();
-        zikaZeroAnelDual.runVolunteersSearch(ParadigmEnum.BRUTE_FORCE, args);
+        zikaZeroAnelDual.runVolunteersSearch(ParadigmEnum.DYNAMIC, args);
     }
 }
