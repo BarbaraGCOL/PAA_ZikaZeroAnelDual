@@ -21,8 +21,8 @@ public class ZikaZeroAnelDual {
                 volunteers = extractor.extractSolutionBruteForce(graph);
                 return volunteers;
             case DYNAMIC:
-                volunteers = extractor.extractSolutionDynamic(graph);
-                return volunteers;    
+//                volunteers = extractor.extractSolutionDynamic(graph);
+//                return volunteers;    
             default:
                 break;
         }

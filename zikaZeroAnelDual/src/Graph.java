@@ -171,6 +171,10 @@ public class Graph {
 		return focusCount;
 	}
 
+	public List<Integer> getListVertices(){
+        return new ArrayList<Integer>(adjacencyList.keySet());
+    }
+	
 	public Set<Integer> getVertices(){
 		return adjacencyList.keySet();
 	}
