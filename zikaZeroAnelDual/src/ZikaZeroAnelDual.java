@@ -20,9 +20,12 @@ public class ZikaZeroAnelDual {
             case BRUTE_FORCE:
                 volunteers = extractor.extractSolutionBruteForce(graph);
                 return volunteers;
+            case GREEDY:
+                volunteers = extractor.extractSolutionGreedy(graph);
+                return volunteers;    
             case DYNAMIC:
-//                volunteers = extractor.extractSolutionDynamic(graph);
-//                return volunteers;    
+                volunteers = extractor.extractSolutionDynamic(graph);
+                return volunteers;    
             default:
                 break;
         }
