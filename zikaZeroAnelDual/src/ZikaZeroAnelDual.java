@@ -18,7 +18,15 @@ public class ZikaZeroAnelDual {
     	
         switch(paradigm){
             case BRUTE_FORCE:
+                long startTime = System.currentTimeMillis();
+                volunteers = extractor.extractSolutionBruteForce(graph);
+                long endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
+                long startTime2 = System.currentTimeMillis();
                 volunteers = extractor.extractSolutionBruteForceSentinel(graph);
+                long endTime2 = System.currentTimeMillis();
+                System.out.println(endTime2 - startTime2);
                 return volunteers;
             case GREEDY:
                 volunteers = extractor.extractSolutionGreedy(graph);
@@ -38,8 +46,8 @@ public class ZikaZeroAnelDual {
         Graph graph = new Graph();
         
         args = new String[2];
-        args[0]="in1000";
-        args[1]="out1000";
+        args[0]="in0";
+        args[1]="out0";
         
         if(args.length == 2){
 
