@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class Graph {
 
-	private HashMap<Integer, List<Integer>> adjacencyList;
+	private HashMap<Integer, Set<Integer>> adjacencyList;
 	private Set<Integer>[] focusList;
 	private int vertexCount, focusCount, edgesCount;
 
@@ -28,9 +28,9 @@ public class Graph {
 	}
 
 	public void initializeAdjacencyList(){
-		adjacencyList = new HashMap<Integer, List<Integer>>(vertexCount);
+		adjacencyList = new HashMap<Integer, Set<Integer>>(vertexCount);
 		for(int i = 0; i < vertexCount; i++){
-			adjacencyList.put(i+1, new ArrayList<Integer>());
+			adjacencyList.put(i+1, new HashSet<Integer>());
 		}
 	}
 	
@@ -43,15 +43,15 @@ public class Graph {
 		
 		if (i > 0 && i <= vertexCount && j > 0 && j <= vertexCount) {
 			
-			List<Integer> set;
+			Set<Integer> set;
 			
 			if(adjacencyList.get(i) == null){
-				set = new ArrayList<Integer>();
+				set = new HashSet<Integer>();
 				adjacencyList.put(i, set);
 			}
 			
 			if(adjacencyList.get(j) == null){
-				set = new ArrayList<Integer>();
+				set = new HashSet<Integer>();
 				adjacencyList.put(j, set);
 			}
 			
@@ -148,7 +148,7 @@ public class Graph {
 	 * @param out - output to be save
 	 * @throws IOException
 	 */
-	public void saveOut(String path, List<Integer> out) throws IOException{
+	public void saveOut(String path, Set<Integer> out) throws IOException{
 
 		FileWriter arq = new FileWriter(path); 
 		PrintWriter gravarArq = new PrintWriter(arq); 
@@ -179,7 +179,7 @@ public class Graph {
 		return adjacencyList.keySet();
 	}
 	
-	public List<Integer> getAdjacency(int vertex){
+	public Set<Integer> getAdjacency(int vertex){
 		return adjacencyList.get(vertex);
 	}
 	

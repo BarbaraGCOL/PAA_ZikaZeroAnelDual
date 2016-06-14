@@ -1,3 +1,3 @@
 public enum ParadigmEnum {
-    BRUTE_FORCE, GREEDY, DYNAMIC
+    BRUTE_FORCE, GREEDY, DYNAMIC, ALL
 }

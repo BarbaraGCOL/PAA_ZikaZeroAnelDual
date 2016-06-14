@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 public class ZikaZeroAnelDual {
 
@@ -11,34 +11,52 @@ public class ZikaZeroAnelDual {
      * @param graph
      * @return set of volunteers that satisfies the preconditions
      */
-    public List<Integer> volunteersSearch(Graph graph, ParadigmEnum paradigm){
+    public Set<Integer> volunteersSearch(Graph graph, ParadigmEnum paradigm){
 
     	Extractor extractor = new Extractor();
-    	List<Integer> volunteers;
+    	Set<Integer> volunteers;
+    	long startTime, endTime;
     	
         switch(paradigm){
             case BRUTE_FORCE:
-                long startTime = System.currentTimeMillis();
+                startTime = System.currentTimeMillis();
                 volunteers = extractor.extractSolutionBruteForce(graph);
-                long endTime = System.currentTimeMillis();
+                endTime = System.currentTimeMillis();
                 System.out.println(endTime - startTime);
                 System.gc();
-                long startTime2 = System.currentTimeMillis();
-                volunteers = extractor.extractSolutionBruteForceSentinel(graph);
-                long endTime2 = System.currentTimeMillis();
-                System.out.println(endTime2 - startTime2);
                 return volunteers;
             case GREEDY:
+                startTime = System.currentTimeMillis();
                 volunteers = extractor.extractSolutionGreedy(graph);
+                endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
                 return volunteers;    
             case DYNAMIC:
+                startTime = System.currentTimeMillis();
                 volunteers = extractor.extractSolutionDynamic(graph);
+                endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
                 return volunteers;    
             default:
-                break;
+                startTime = System.currentTimeMillis();
+                volunteers = extractor.extractSolutionBruteForce(graph);
+                endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
+                startTime = System.currentTimeMillis();
+                volunteers = extractor.extractSolutionGreedy(graph);
+                endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
+                startTime = System.currentTimeMillis();
+                volunteers = extractor.extractSolutionDynamic(graph);
+                endTime = System.currentTimeMillis();
+                System.out.println(endTime - startTime);
+                System.gc();
+                return volunteers;    
         }
-        
-        return null;
     }
 
     public void runVolunteersSearch(ParadigmEnum paradigm, String[]args) {
@@ -46,8 +64,11 @@ public class ZikaZeroAnelDual {
         Graph graph = new Graph();
         
         args = new String[2];
-        args[0]="in0";
-        args[1]="out0";
+        args[0]="in_n1000_r250";
+        args[1]="out_n1000_r250";
+        
+//        args[0]="in0";
+//        args[1]="out0";
         
         if(args.length == 2){
 
@@ -57,12 +78,16 @@ public class ZikaZeroAnelDual {
                 e.printStackTrace();
             }
 
-            List<Integer> path = volunteersSearch(graph, paradigm);
-
-            try {
-                graph.saveOut(args[1], path);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(graph.getVertexCount() > 0){
+            
+                Set<Integer> path = volunteersSearch(graph, paradigm);
+    
+                try {
+                    graph.saveOut(args[1], path);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            
             }
         }
         else{
