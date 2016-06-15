@@ -18,6 +18,10 @@ public class Extractor {
         int lastVertex = graph.getListVertices().get(0);
         int newVertex;
 
+        if(countVertices < min){
+            return new HashSet<Integer>();
+        }
+        
         subgraphAux.add(lastVertex);
 
         Iterator<Integer> it;
@@ -81,14 +85,18 @@ public class Extractor {
 		int min = countFocus/2;
 
 		int[]count = new int[countVertices];
-		Set<Integer>focus, focusV;
+		Set<Integer> focusV;
 		Iterator<Integer> it;
 		int f1, f2;
 		
+		if(countVertices < min){
+            return new HashSet<Integer>();
+        }
+		
 		// Calculates number of conflicts on each vertex
 		for(int i = 0; i < countVertices; i++){
-			focus = graph.getFocus(vertices.get(i));
-			it = focus.iterator();
+			focusV = graph.getFocus(vertices.get(i));
+			it = focusV.iterator();
 			f1 = it.next(); 
 			f2 = it.next();
 
@@ -163,7 +171,7 @@ public class Extractor {
             }
             
             //Only if has not been analyzed on this iteration and has not been added to the solution
-            if(adj2 != firstVertex || adj2 != adj1 || !subgraph.contains(adj2)){
+            if(adj2 != firstVertex && adj2 != adj1 && !subgraph.contains(adj2)){
                 it = graph.getFocus(adj2).iterator();
                 
                 if(focusLast.contains(it.next())){
@@ -214,6 +222,10 @@ public class Extractor {
 		Set<Integer> extractedSubgraph;
 		Set<Integer> coverFocus;
 		Iterator<Integer>it;
+		
+		if(countVertices < min){
+		    return new HashSet<Integer>();
+		}
 
 		for(int subgraphSize = min ; subgraphSize < countVertices - 1; subgraphSize++)
 		{
