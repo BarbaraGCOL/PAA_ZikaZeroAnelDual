@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,9 +16,9 @@ import java.util.Set;
  * @author barbara.lopes
  *
  */
-public class Graph {
+public class GraphGreedy {
 
-	private HashMap<Integer, Integer> adjacencyList;
+	private HashMap<Integer, Set<Integer>> adjacencyList;
 	private Set<Integer>[] focusList;
 	private Set<Integer> focus;
 	private int vertexCount, focusCount, edgesCount;
@@ -25,11 +26,17 @@ public class Graph {
 	/**
 	 * Constructor
 	 */
-	public Graph(){
+	public GraphGreedy(){
 		focus = new HashSet<Integer>();
-		adjacencyList = new HashMap<Integer, Integer>();
 	}
 
+	public void initializeAdjacencyList(){
+		adjacencyList = new HashMap<Integer, Set<Integer>>(vertexCount);
+		for(int i = 0; i < vertexCount; i++){
+			adjacencyList.put(i+1, new HashSet<Integer>());
+		}
+	}
+	
 	/**
 	 * Add a edge on the AdjacencyList
 	 * @param i - vertex 1
@@ -38,7 +45,24 @@ public class Graph {
 	public void addEdge(int i, int j) {
 		
 		if (i > 0 && i <= vertexCount && j > 0 && j <= vertexCount) {
-			adjacencyList.put(i, j);
+			
+			Set<Integer> set;
+			
+			if(adjacencyList.get(i) == null){
+				set = new HashSet<Integer>();
+				adjacencyList.put(i, set);
+			}
+			
+			if(adjacencyList.get(j) == null){
+				set = new HashSet<Integer>();
+				adjacencyList.put(j, set);
+			}
+			
+			// Add Adjacency (add edge on the list)
+			adjacencyList.get(i).add(j);
+			
+			//Mirroring
+			adjacencyList.get(j).add(i);
 		}
 	}
 
@@ -82,6 +106,7 @@ public class Graph {
 				if(countLines == 1){
 					vertexCount = Integer.parseInt(values[0]);
 					edgesCount = Integer.parseInt(values[1]);
+					initializeAdjacencyList();
 				}
 				else
 					// If still are edges to read
@@ -154,12 +179,24 @@ public class Graph {
 		return adjacencyList.keySet();
 	}
 	
-	public Integer getAdjacency(int vertex){
+	public Set<Integer> getAdjacency(int vertex){
 		return adjacencyList.get(vertex);
 	}
 	
 	public Set<Integer> getFocus(int vertex){
 		return focusList[vertex - 1];
+	}
+	
+	public int getNextAdjacency(int vertex, int last){
+		Iterator<Integer> it = adjacencyList.get(vertex).iterator();
+		int next = it.next();
+		
+		if(next == last){
+			return it.next();
+		}
+		
+		it = null;
+		return next;
 	}
 	
 	public Set<Integer> getListFocus(){
